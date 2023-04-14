@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cleanCategories, fetchCategories, switchCategory } from "../../redux/features/categorySlice";
+import {
+  cleanCategories,
+  fetchCategories,
+  switchCategory,
+} from "../../redux/features/categorySlice";
 import { cleanPharmacies, getPharmacies, switchPharmacy } from "../../redux/features/pharmacySlice";
 import styles from "./SortPanel.module.scss";
 import * as React from "react";
@@ -11,7 +15,7 @@ import { useState } from "react";
 
 const SortPanel = ({ valuePrice, setValuePrice }) => {
   const dispatch = useDispatch();
-  const [selectedPharmacy, setSelectedPharmacy] = useState("");
+  // const [selectedPharmacy, setSelectedPharmacy] = useState("");
 
   const pharmacies = useSelector((state) => state.pharmacy.pharmacies);
   const categories = useSelector((state) => state.category.categories);
@@ -31,8 +35,7 @@ const SortPanel = ({ valuePrice, setValuePrice }) => {
   };
 
   const handlePharmacies = (value) => {
-    setSelectedPharmacy(value) 
-    dispatch(switchPharmacy(selectedPharmacy));
+    dispatch(switchPharmacy(value));
   };
 
   const handleChange = (event, newValue) => {
@@ -112,14 +115,12 @@ const SortPanel = ({ valuePrice, setValuePrice }) => {
           <ul className={styles.list}>
             {pharmacies &&
               pharmacies.map((pharm) => {
-                const isDisabled = selectedPharmacy && selectedPharmacy !== pharm.pharmacyName;
                 const classActive = selectPharmacies.includes(pharm.pharmacyName);
                 return (
                   <div
                     key={pharm._id}
                     onClick={() => handlePharmacies(pharm.pharmacyName)}
-                    className={classActive && !isDisabled ? `${styles.select}` : `${styles.li}`}
-                    disabled={isDisabled}>
+                    className={classActive ? `${styles.select}` : `${styles.li}`}>
                     {pharm.pharmacyName}
                   </div>
                 );

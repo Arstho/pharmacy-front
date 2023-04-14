@@ -62,7 +62,7 @@ const pharmacySlice = createSlice({
           return pharmacy !== action.payload;
         });
       } else {
-        state.selectPharmacies = [...state.selectPharmacies, action.payload];
+        state.selectPharmacies = [action.payload];
       }
     },
     cleanPharmacies(state, action) {
